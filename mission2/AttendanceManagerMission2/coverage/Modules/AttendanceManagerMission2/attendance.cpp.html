@@ -112,11 +112,17 @@ public:
 	return RUN_ALL_TESTS();</span>
 #else
 	AttendanceManager manager;
+	vector&lt;IGrade*&gt; grades = {
+	new NormalGrade(),
+	new SilverGrade(),
+	new GoldGrade(),
+	};
+
 	manager.processFile("attendance_weekday_500.txt");
 
 	manager.addPolicy(new DayPointPolicy());
 	manager.addPolicy(new BonusPointPolicy());
-	manager.addPolicy(new GradePolicy());
+	manager.addPolicy(new GradePolicy(grades));
 
 	manager.applyPolicies();
 	manager.printPlayerData();

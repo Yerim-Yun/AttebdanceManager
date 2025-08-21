@@ -8,6 +8,7 @@ using namespace testing;
 class MockGrade : public IGrade {
 public:
 	MOCK_METHOD(string, getGradeName, (), (const, override));
+	MOCK_METHOD(bool, isMeetCriteria, (int points), (const, override));
 };
 
 class PlayerFixture : public ::testing::Test {
@@ -49,11 +50,30 @@ TEST_F(PlayerFixture, PlayerGradeTest) {
 
 	auto mockGrade = std::make_unique<MockGrade>();
 	EXPECT_CALL(*mockGrade, getGradeName())
-		.WillOnce(Return("TESTGRADE"));
+		.WillRepeatedly(Return("TESTGRADE"));
+
+	EXPECT_CALL(*mockGrade, isMeetCriteria(_))
+		.WillRepeatedly(Return(true));
 
 	player->setGrade(mockGrade.get());
 
 	EXPECT_EQ(player->getGradeName(), "TESTGRADE");
 	mockGrade = std::make_unique<MockGrade>();
 
+}
+
+TEST_F(PlayerFixture, PlayerGradeTestNotMeet) {
+	auto mockGrade = std::make_unique<MockGrade>();
+	EXPECT_CALL(*mockGrade, getGradeName())
+		.WillRepeatedly(Return("TESTGRADE"));
+
+	EXPECT_CALL(*mockGrade, isMeetCriteria(_))
+		.WillRepeatedly(Return(false));
+
+	std::vector<IGrade*> grades = { mockGrade.get() };
+	GradePolicy policy(grades);
+
+	policy.apply(*player);
+
+	EXPECT_EQ(player->getGradeName(), "Unknown");
 }

@@ -32,13 +32,10 @@ void BonusPointPolicy::apply(Player& player) {
 }
 
 void GradePolicy::apply(Player& player) {
-	if (player.getPoints() >= 50) {
-		player.setGrade(new GoldGrade());
-	}
-	else if (player.getPoints() >= 30) {
-		player.setGrade(new SilverGrade());
-	}
-	else {
-		player.setGrade(new NormalGrade());
+	for (auto it = grades.rbegin(); it != grades.rend(); ++it) {
+		if ((*it)->isMeetCriteria(player.getPoints())) {
+			player.setGrade(*it);
+			return;
+		}
 	}
 }

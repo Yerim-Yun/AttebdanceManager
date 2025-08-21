@@ -68,7 +68,12 @@ TEST_F(PolicyFixture, BonusApplyTestWeekendCase) {
 }
 
 TEST_F(PolicyFixture, GradeApplyTest) {
-	setPolicy(new GradePolicy());
+	vector<IGrade*> grades = {
+		new NormalGrade(),
+		new SilverGrade(),
+		new GoldGrade(),
+	};
+	setPolicy(new GradePolicy(grades));
 	player->addPoints(10);
 	policy->apply(*player);
 	EXPECT_EQ(player->getGradeName(), "NORMAL");

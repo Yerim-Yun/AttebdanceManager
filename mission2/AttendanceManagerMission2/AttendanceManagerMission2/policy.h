@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 #include "player.h"
 #include "grade.h"
 
@@ -35,6 +36,9 @@ public:
 };
 
 class GradePolicy : public IPolicy {
-	public:
+public:
+	GradePolicy(vector<IGrade*>& grades) : grades(grades) {};
 	void apply(Player& player) override;
+private:
+	vector<IGrade*> grades;
 };

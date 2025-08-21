@@ -43,16 +43,13 @@
 }</span>
 
 <span style = "background-color:#dfd">void GradePolicy::apply(Player&amp; player) {
-	if (player.getPoints() &gt;= 50) {
-		player.setGrade(new GoldGrade());
+	for (auto it = grades.rbegin(); it != grades.rend(); ++it) {
+		if ((*it)-&gt;isMeetCriteria(player.getPoints())) {
+			player.setGrade(*it);
+			return;
+		}
 	}
-	else if (player.getPoints() &gt;= 30) {
-		player.setGrade(new SilverGrade());
-	}</span>
-	else {
-<span style = "background-color:#dfd">		player.setGrade(new NormalGrade());</span>
-	}
-<span style = "background-color:#dfd">}</span></pre>
+}</span></pre>
         <hr />
         <table width="100%">
             <thead>

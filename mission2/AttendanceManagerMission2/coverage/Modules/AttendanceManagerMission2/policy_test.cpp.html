@@ -79,7 +79,12 @@ public:
 }</span>
 
 <span style = "background-color:#dfd">TEST_F(PolicyFixture, GradeApplyTest) {
-	setPolicy(new GradePolicy());
+	vector&lt;IGrade*&gt; grades = {</span>
+		new NormalGrade(),
+		new SilverGrade(),
+		new GoldGrade(),
+	};
+<span style = "background-color:#dfd">	setPolicy(new GradePolicy(grades));
 	player-&gt;addPoints(10);
 	policy-&gt;apply(*player);
 	EXPECT_EQ(player-&gt;getGradeName(), "NORMAL");

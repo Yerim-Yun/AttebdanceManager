@@ -101,14 +101,19 @@ int main() {
 	return RUN_ALL_TESTS();
 #else
 	AttendanceManager manager;
+	vector<IGrade*> grades = {
+	new NormalGrade(),
+	new SilverGrade(),
+	new GoldGrade(),
+	};
+
 	manager.processFile("attendance_weekday_500.txt");
 
 	manager.addPolicy(new DayPointPolicy());
 	manager.addPolicy(new BonusPointPolicy());
-	manager.addPolicy(new GradePolicy());
+	manager.addPolicy(new GradePolicy(grades));
 
 	manager.applyPolicies();
-
 	manager.printPlayerData();
 	manager.printRemovedPlayer();
 #endif
