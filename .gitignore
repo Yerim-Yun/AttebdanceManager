@@ -3,8 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
-*.vcxproj
-*.vxcproj.filters
+**/*.vcxproj
+**/*.vcxproj.*
+**/*.sln
 *.sln
 
 # User-specific files
